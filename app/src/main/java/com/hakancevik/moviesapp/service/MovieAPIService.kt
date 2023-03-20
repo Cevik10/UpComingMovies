@@ -5,6 +5,7 @@ import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Query
 
 class MovieAPIService {
 
@@ -23,8 +24,8 @@ class MovieAPIService {
         return api.getUpComingMovies()
     }
 
-    fun getTopRatedMoviesData(): Single<Movie> {
-        return api.getTopRatedMovies()
+    fun getTopRatedMoviesData(page: Int): Single<Movie> {
+        return api.getTopRatedMovies(page)
     }
 
     fun getPopularMoviesData(): Single<Movie> {

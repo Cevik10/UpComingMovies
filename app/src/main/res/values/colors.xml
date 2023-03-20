@@ -14,11 +14,14 @@
     <color name="transparent">#00A6A7A9</color>
     <color name="yellow">#FFC107</color>
 
-
     <color name="app_bar_color">#161511</color>
     <color name="tab_layout_color">#25241F</color>
     <color name="color_on_primary">#25241F</color>
 
+    <color name="color_rating_active">#857527</color>
+    <color name="color_rating_inactive">#55534A</color>
+
+    <color name="card_view_color">#3B3A38</color>
 
 
 </resources>

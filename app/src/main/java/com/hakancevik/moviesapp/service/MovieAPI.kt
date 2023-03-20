@@ -3,6 +3,7 @@ package com.hakancevik.moviesapp.service
 import com.hakancevik.moviesapp.model.Movie
 import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface MovieAPI {
 
@@ -16,7 +17,7 @@ interface MovieAPI {
 
 
     @GET("movie/top_rated?api_key=40c50a5fefc8ac8a8b73183d4c143413")
-    fun getTopRatedMovies(): Single<Movie>
+    fun getTopRatedMovies(@Query("page") page: Int): Single<Movie>
 
     @GET("movie/popular?api_key=40c50a5fefc8ac8a8b73183d4c143413")
     fun getPopularMovies(): Single<Movie>

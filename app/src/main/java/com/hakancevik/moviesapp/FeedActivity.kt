@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hakancevik.moviesapp.adapter.ViewPagerAdapter
 import com.hakancevik.moviesapp.model.Movie
 import com.hakancevik.moviesapp.service.MovieAPIService
+import com.hakancevik.moviesapp.util.visible
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -20,7 +22,6 @@ class FeedActivity : AppCompatActivity() {
 
     private val movieAPIService = MovieAPIService()
     private val compositeDisposable = CompositeDisposable()
-    private var movieList: List<Movie>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +30,6 @@ class FeedActivity : AppCompatActivity() {
 
         val adapter = ViewPagerAdapter(supportFragmentManager, lifecycle)
         viewPager.adapter = adapter
-
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
 
@@ -46,24 +46,23 @@ class FeedActivity : AppCompatActivity() {
 
 
         getUpComingDataFromAPI()
-        getTopRatedDataFromAPI()
         getPopularDataFromAPI()
 
 
     }
 
-    private fun getUpComingDataFromAPI(){
+    private fun getUpComingDataFromAPI() {
         compositeDisposable.add(
             movieAPIService.getUpComingMoviesData()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<Movie>() {
                     override fun onSuccess(t: Movie) {
-                        Log.d("system.out","coming: " + t.results[0].original_title)
+                        Log.d("system.out", "coming: " + t.results[0].original_title)
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.d("system.out",e.toString())
+                        Log.d("system.out", e.toString())
                     }
 
 
@@ -72,45 +71,26 @@ class FeedActivity : AppCompatActivity() {
     }
 
 
-    private fun getTopRatedDataFromAPI(){
-        compositeDisposable.add(
-            movieAPIService.getTopRatedMoviesData()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<Movie>() {
-                    override fun onSuccess(t: Movie) {
-                        Log.d("system.out","top rated: " + t.results[0].original_title)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Log.d("system.out",e.toString())
-                    }
 
 
-                })
-        )
-    }
-
-
-    private fun getPopularDataFromAPI(){
+    private fun getPopularDataFromAPI() {
         compositeDisposable.add(
             movieAPIService.getPopularMoviesData()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<Movie>() {
                     override fun onSuccess(t: Movie) {
-                        Log.d("system.out","popular: " + t.results[0].original_title)
+                        Log.d("system.out", "popular: " + t.results[0].original_title)
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.d("system.out",e.toString())
+                        Log.d("system.out", e.toString())
                     }
 
 
                 })
         )
     }
-
 
 
 }
